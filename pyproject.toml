@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "cdf-bootcamp-2024"
+version = "0.1.0"
+description = ""
+authors = ["Mohammed Al-Safwan <mohammed.alsafwan@cntxt.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.11.10"
+
+cognite-sdk = "^7.62.5"
+cognite-toolkit = "0.3.0b4"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
