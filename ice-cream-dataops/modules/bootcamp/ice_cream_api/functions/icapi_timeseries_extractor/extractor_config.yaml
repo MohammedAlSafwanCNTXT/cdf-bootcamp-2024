@@ -20,4 +20,4 @@ cognite:
 
 logger:
   console:
-    level: INFO
+    level: DEBUG

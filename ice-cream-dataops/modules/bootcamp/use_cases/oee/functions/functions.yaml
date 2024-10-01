@@ -6,3 +6,10 @@
     version: "1.0"
   runtime: py311
   functionPath: ./handler.py
+  envVars:
+    CDF_PROJECT: {{ CDF_PROJECT }}
+    CDF_URL: {{ CDF_URL }}
+    IDP_TENANT_ID: {{ IDP_TENANT_ID }}
+    IDP_CLIENT_ID: {{ data_pipeline_oee_client_id }}
+    IDP_CLIENT_SECRET: {{ data_pipeline_oee_client_secret }}
+    IDP_SCOPES: {{ IDP_SCOPES }}
