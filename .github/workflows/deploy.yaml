@@ -20,7 +20,7 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
     - name: Install Poetry
-      run: pipx install poetry==1.2.0
+      run: pipx install poetry==1.8.0 --python ${{ env.PYTHON_VERSION }}
         
     - name: Build
       run: poetry run cdf-tk build --env=test
