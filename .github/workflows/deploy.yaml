@@ -22,8 +22,11 @@ jobs:
         . $HOME/.poetry/env
         
     - name: Build
-      run: poetry run cdf-tk build --env=$environment
+      run: poetry run cdf-tk build --env=${{ matrix.environment }}
 
+    - name: Dry run Deploy
+      run: poetry run cdf-tk deploy --env=${{ matrix.environment }} --dry-run
+    
     - name: Deploy
-      run: poetry run cdf-tk deploy --env=$environment
+      run: poetry run cdf-tk deploy --env=${{ matrix.environment }}
 
