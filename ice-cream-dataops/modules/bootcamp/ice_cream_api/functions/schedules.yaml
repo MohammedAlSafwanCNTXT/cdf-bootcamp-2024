@@ -23,7 +23,7 @@
     backfill: True
     hours: 720
     sites:
-    - Kuala Lumpur
+    - Kuala_Lumpur
     - Hannover
     - Nuremberg
     - Marseille
