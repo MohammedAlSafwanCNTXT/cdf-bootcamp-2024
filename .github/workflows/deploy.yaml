@@ -10,9 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       GITHUB_ENV: test
+      PYTHON_VERSION: '3.11'
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
+
+    - uses: actions/setup-python@v5
+      with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
     - name: Install Poetry
       run: pipx install poetry==1.2.0
@@ -28,9 +33,14 @@ jobs:
     needs: [build-and-dry-run]
     env:
       GITHUB_ENV: prod
+      PYTHON_VERSION: '3.11'
     steps:
     - name: Checkout Code
       uses: actions/checkout@v2
+
+    - uses: actions/setup-python@v5
+      with:
+          python-version: ${{ env.PYTHON_VERSION }}
 
     - name: Install Poetry
       run: pipx install poetry==1.2.0
