@@ -12,3 +12,18 @@ jobs:
       matrix:
         environment: [test, prod]
 
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | sh
+        . $HOME/.poetry/env
+        
+    - name: Build
+      run: poetry run cdf-tk build --env=$environment
+
+    - name: Deploy
+      run: poetry run cdf-tk deploy --env=$environment
+
