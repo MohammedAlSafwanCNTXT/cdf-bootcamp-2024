@@ -44,7 +44,6 @@ jobs:
 
     - name: Install Poetry
       run: pipx install poetry==1.8.0 --python ${{ env.PYTHON_VERSION }}
-        
+
     - name: Deploy
       run: poetry run cdf-tk deploy --env=prod
-
