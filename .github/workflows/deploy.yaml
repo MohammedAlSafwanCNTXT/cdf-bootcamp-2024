@@ -60,10 +60,10 @@ jobs:
         run: poetry install
 
       - name: Build
-        run: poetry run cdf-tk build --env=test
+        run: poetry run cdf-tk build --env=${{ env.GITHUB_ENV }}
 
       - name: Dry run Deploy
-        run: poetry run cdf-tk deploy --env=test --dry-run
+        run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }} --dry-run
 
   deploy:
     runs-on: ubuntu-latest
@@ -100,7 +100,7 @@ jobs:
       READ_WRITE_SOURCE_ID: ${{ vars.READ_WRITE_SOURCE_ID }}
       READ_ONLY_SOURCE_ID: ${{ vars.READ_ONLY_SOURCE_ID }}
       ICAPI_EXTRACTORS_SOURCE_ID: ${{ vars.ICAPI_EXTRACTORS_SOURCE_ID }}
-      
+
     steps:
       - name: Checkout Code
         uses: actions/checkout@v2
@@ -110,10 +110,13 @@ jobs:
           python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Install Poetry
-        run: pipx install poetry==1.8.0 --python ${{ env.PYTHON_VERSION }}
+        run: pipx install poetry==${{ env.POETRY_VERSION }} --python ${{ env.PYTHON_VERSION }}
 
       - name: Setup Project
         run: poetry install
 
+      - name: Build
+        run: poetry run cdf-tk build --env=${{ env.GITHUB_ENV }}
+        
       - name: Deploy
-        run: poetry run cdf-tk deploy --env=prod
+        run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }}
