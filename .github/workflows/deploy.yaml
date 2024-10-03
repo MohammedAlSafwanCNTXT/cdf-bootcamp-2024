@@ -60,10 +60,13 @@ jobs:
         run: poetry install
 
       - name: Build
-        run: poetry run cdf-tk build --env=${{ env.GITHUB_ENV }}
+        run: poetry run cdf-tk build --env=${{ env.GITHUB_ENV }} --verbose
 
       - name: Dry run Deploy
-        run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }} --dry-run
+        run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }} --dry-run --verbose
+        
+      - name: Deploy
+        run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }} --verbose
 
   deploy:
     runs-on: ubuntu-latest
@@ -116,7 +119,10 @@ jobs:
         run: poetry install
 
       - name: Build
-        run: poetry run cdf-tk build --env=${{ env.GITHUB_ENV }}
+        run: poetry run cdf-tk build --env=${{ env.GITHUB_ENV }} --verbose
+
+      - name: Dry run Deploy
+        run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }} --dry-run --verbose
         
       - name: Deploy
-        run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }}
+        run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }} --verbose
