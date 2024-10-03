@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - '*'
+  pull_request:
+    branches:
+      - '*'
 
 env:
     PYTHON_VERSION: '3.11'
@@ -123,6 +126,6 @@ jobs:
 
       - name: Dry run Deploy
         run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }} --dry-run --verbose
-        
+
       - name: Deploy
         run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }} --verbose
