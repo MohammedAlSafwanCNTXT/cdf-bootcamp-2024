@@ -10,7 +10,7 @@ env:
     POETRY_VERSION: '1.8.0'
 
 jobs:
-  deploy-to-tes:
+  deploy-to-test:
     runs-on: ubuntu-latest
     environment: test
     env:
