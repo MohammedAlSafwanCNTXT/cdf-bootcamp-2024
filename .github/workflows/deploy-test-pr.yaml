@@ -1,9 +1,6 @@
-name: Deploy
+name: Deploy PR Test Environment
 
 on:
-  push:
-    branches:
-      - '*'
   pull_request:
     branches:
       - '*'
