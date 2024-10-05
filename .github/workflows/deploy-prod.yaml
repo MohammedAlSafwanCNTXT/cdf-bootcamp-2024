@@ -1,0 +1,69 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - '*'
+
+env:
+    PYTHON_VERSION: '3.11'
+    POETRY_VERSION: '1.8.0'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: prod
+    env:
+      GITHUB_ENV: prod
+      CDF_PROJECT: ${{ vars.CDF_PROJECT }}
+      LOGIN_FLOW: ${{ vars.LOGIN_FLOW }}
+      CDF_CLUSTER: ${{ vars.CDF_CLUSTER }}
+
+      # CLIENT ID FOR TEST ADMIN TK APP
+      IDP_CLIENT_ID: ${{ vars.IDP_CLIENT_ID }}
+      IDP_CLIENT_SECRET: ${{ secrets.IDP_CLIENT_SECRET }}
+
+      # CLIENT ID FOR TEST DATA PIPELINE OEE APP
+      DATA_PIPELINE_OEE_CLIENT_ID: ${{ vars.DATA_PIPELINE_OEE_CLIENT_ID }}
+      DATA_PIPELINE_OEE_CLIENT_SECRET: ${{ secrets.DATA_PIPELINE_OEE_CLIENT_SECRET }}
+
+      # CLIENT ID FOR TEST ICAPI EXTRACTORS APP
+      ICAPI_EXTRACTORS_CLIENT_ID: ${{ vars.ICAPI_EXTRACTORS_CLIENT_ID }}
+      ICAPI_EXTRACTORS_CLIENT_SECRET: ${{ secrets.ICAPI_EXTRACTORS_CLIENT_SECRET }}
+
+      # Note: Either the TENANT_ID or the TENANT_URL must be written.
+      IDP_TENANT_ID: ${{ vars.IDP_TENANT_ID }}
+      IDP_TOKEN_URL: ${{ vars.IDP_TOKEN_URL }}
+
+      # The below variables are the defaults, they are automatically constructed unless they are set.
+      CDF_URL: ${{ vars.CDF_URL }}
+      IDP_SCOPES: ${{ vars.IDP_SCOPES }}
+
+      DATA_DEVELOPER_SOURCE_ID: ${{ vars.DATA_DEVELOPER_SOURCE_ID }}
+      DATA_PIPELINE_OEE_SOURCE_ID: ${{ vars.DATA_PIPELINE_OEE_SOURCE_ID }}
+      READ_WRITE_SOURCE_ID: ${{ vars.READ_WRITE_SOURCE_ID }}
+      READ_ONLY_SOURCE_ID: ${{ vars.READ_ONLY_SOURCE_ID }}
+      ICAPI_EXTRACTORS_SOURCE_ID: ${{ vars.ICAPI_EXTRACTORS_SOURCE_ID }}
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+
+      - name: Install Poetry
+        run: pipx install poetry==${{ env.POETRY_VERSION }} --python ${{ env.PYTHON_VERSION }}
+
+      - name: Setup Project
+        run: poetry install
+
+      - name: Build
+        run: poetry run cdf-tk build --env=${{ env.GITHUB_ENV }} --verbose
+
+      - name: Dry run Deploy
+        run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }} --dry-run --verbose
+
+      - name: Deploy
+        run: poetry run cdf-tk deploy --env=${{ env.GITHUB_ENV }} --verbose
