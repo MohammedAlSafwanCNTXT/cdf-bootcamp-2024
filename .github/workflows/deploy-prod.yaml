@@ -1,4 +1,4 @@
-name: Deploy Prod Environment
+name: Deploy to Prod Environment
 
 on:
   push:
@@ -10,7 +10,7 @@ env:
     POETRY_VERSION: '1.8.0'
 
 jobs:
-  deploy:
+  deploy-to-prod:
     runs-on: ubuntu-latest
     environment: prod
     env:

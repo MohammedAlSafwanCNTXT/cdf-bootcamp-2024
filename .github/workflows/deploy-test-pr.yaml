@@ -1,4 +1,4 @@
-name: Deploy PR Test Environment
+name: Deploy to PR Test Environment
 
 on:
   pull_request:
@@ -10,7 +10,7 @@ env:
     POETRY_VERSION: '1.8.0'
 
 jobs:
-  deploy:
+  deploy-to-test:
     runs-on: ubuntu-latest
     environment: test
     env:
